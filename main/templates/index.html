@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO App</title>
+</head>
+<body>
+    <h1>TODO List</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="text" placeholder="Добавить TODO...">
+        <button type="submit">Добавить</button>
+    </form>
+    <form method="POST" action="{% url 'delete_multiple' %}">
+        {% csrf_token %}
+        <ul>
+            {% for todo in todos %}
+                <li>
+                    <input type="checkbox" name="todos" value="{{ todo.id }}">
+
+                    {{ todo.text }}
+                    <a href="{% url 'delete' todo.id %}">Удалить</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Удалить выбранные</button>
+    </form>
+</body>
+</html>
